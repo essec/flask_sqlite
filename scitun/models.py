@@ -1,10 +1,10 @@
 import sqlalchemy as sa
 from flask_sqlalchemy import SQLAlchemy
 
-Base = sa.ext.declarative.declarative_base()
+# Base = sa.ext.declarative.declarative_base()
 
 db = SQLAlchemy()
-# Base = db.Model
+Base = db.Model
 
 
 def init_app(app):

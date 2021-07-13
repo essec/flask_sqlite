@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+
+{% block title %}{{ student.student_id }} | student{% endblock %}
+{% block body %}
+<div class="container mt-5">
+  <div class="p-3 rounded-3 shadow">
+    <h4>
+      สวัสดี
+      {{ student.first_name }}
+      {{ student.last_name }}
+    </h4>
+    <p>
+      {{ student.student_id }} <br>
+      {{ student.email }}
+    </p>
+  </div>
+</div>
+{% endblock %}

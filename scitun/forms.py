@@ -1,3 +1,4 @@
+from datetime import datetime, date
 from flask_wtf import FlaskForm
 from wtforms import fields, validators
 from wtforms.fields import html5
@@ -30,3 +31,10 @@ class Lecturer(FlaskForm):
 
 class AssignStudent(FlaskForm):
     student = fields.SelectField("Students", choices=[])
+
+
+class Scholarship(FlaskForm):
+    name = fields.StringField("Name")
+    description = fields.TextAreaField("Description")
+    public_date = fields.DateField("Public date", default=date.today())
+    close_date = fields.DateField("Close date", default=date.today())

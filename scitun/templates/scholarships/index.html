@@ -1,0 +1,43 @@
+{% extends "base/base.html" %}
+{% block title %}Scholarship{% endblock %}
+
+{% macro render_student_table(scholarships) %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Public</th>
+      <th>Close</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for scholarship in scholarships%}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ scholarship.scholarship_id }}</td>
+      <td>{{ scholarship.name }}</td>
+      <td>{{ scholarship.public_date }}</td>
+      <td>{{ scholarship.close_date }}</td>
+      <td>
+        <a href="{{ url_for('scholarship_view', scholarship_id=scholarship.scholarship_id) }}">detail</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endmacro %}
+
+{% block body %}
+<div class="container mt-5">
+  <div class="d-flex justify-content-end mb-3">
+    <a class="btn btn-primary" href="{{ url_for('create_scholarship') }}">สร้างทุน</a>
+  </div>
+  <div class="rounded-3 p-4 shadow">
+    <h1 class="fw-bold">Scholarships</h1>
+    {{ render_student_table(scholarships) }}
+  </div>
+</div>
+{% endblock %}

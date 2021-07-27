@@ -1,0 +1,39 @@
+{% extends "base/base.html" %}
+
+{% block title %}{{ scholarship.scholarship_id }} | scholarship{% endblock %}
+{% block body %}
+<div class="container mt-5">
+  <div class="p-3 rounded-3 shadow">
+    <h4>
+      {{ scholarship.name }}
+    </h4>
+    <p>
+      {{ scholarship.description }}
+    </p>
+    <p>
+      Public: {{ scholarship.public_date }}
+    </p>
+    <p>
+      Close: {{ scholarship.close_date }}
+    </p>
+    <form class="row g-3" action="{{ url_for('scholarship_assign_student') }}" method="POST">
+      <div class="col-auto">
+        {{ form.student(class="form-select") }}
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">เพิ่มนักเรียน</button>
+      </div>
+      <input type="hidden" name="scholarship_id" id="scholarship_id" value="{{ scholarship.scholarship_id }}">
+    </form>
+  </div>
+  <div class="p-4 rounded-3 shadow mt-3">
+    {% for student in scholarship.students %}
+    <p>
+      {{ student.student_id }}
+      {{ student.first_name }}
+      {{ student.last_name }}
+    </p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

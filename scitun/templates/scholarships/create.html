@@ -1,0 +1,39 @@
+{% extends "base/base.html" %}
+{% block title %}Register Student{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+  <div class="border rounded-3 p-3 shadow-sm">
+    <div class="row mb-3">
+      <h1>Register</h1>
+    </div>
+    <div class="row">
+      <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.name.label(class="form-label") }}
+          {{ form.name(class="form-control") }}
+        </div>
+        <div class="mb-3">
+          {{ form.description.label(class="form-label") }}
+          <div class="form-floating">
+            {{ form.description(class="form-control", style="height: 100px") }}
+            <label>Scholarship description</label>
+          </div>
+        </div>
+        <div class="mb-3">
+          {{ form.public_date.label(class="form-label") }}
+          {{ form.public_date(class="form-control", type="date") }}
+        </div>
+        <div class="mb-3">
+          {{ form.close_date.label(class="form-label") }}
+          {{ form.close_date(class="form-control", type="date") }}
+        </div>
+        <button class="btn btn-primary">
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

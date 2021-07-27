@@ -1,0 +1,41 @@
+{% extends "base/base.html" %}
+{% block title %}Students{% endblock %}
+
+{% macro render_lecturer_table(lecturers) %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>ID</th>
+      <th>First</th>
+      <th>Last</th>
+      <th>Email</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for lecturer in lecturers%}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ lecturer.lecturer_id }}</td>
+      <td>{{ lecturer.first_name }}</td>
+      <td>{{ lecturer.last_name }}</td>
+      <td>{{ lecturer.email }}</td>
+      <td><a href="{{ url_for('lecturer_view', lecturer_id=lecturer.lecturer_id) }}" class="btn btn-light" >ดูข้อมูล</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endmacro %}
+
+{% block body %}
+<div class="container mt-5">
+  <div class="rounded-3 p-4 shadow">
+    <div class="d-flex justify-content-between">
+      <h1 class="fw-bold">Lecturers</h1>
+      <a href="{{ url_for('register_lecturer') }}" class="btn btn-primary align-self-center">Register</a>
+    </div>
+    {{ render_lecturer_table(lecturers) }}
+  </div>
+</div>
+{% endblock %}

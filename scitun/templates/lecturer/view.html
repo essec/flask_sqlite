@@ -1,0 +1,37 @@
+{% extends "base/base.html" %}
+
+{% block title %}{{ lecturer.lecturer_id }} | lecturer{% endblock %}
+{% block body %}
+<div class="container mt-5">
+  <div class="p-4 rounded-3 shadow">
+    <h4>
+      สวัสดี
+      {{ lecturer.first_name }}
+      {{ lecturer.last_name }}
+    </h4>
+    <p>
+      {{ lecturer.lecturer_id }} <br>
+      {{ lecturer.email }}
+    </p>
+    <form class="row g-3" action="{{ url_for('assign_student') }}" method="POST">
+      <div class="col-auto">
+        {{ form.student(class="form-select") }}
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">เพิ่มนักเรียน</button>
+      </div>
+      <input type="hidden" name="lecturer_id" id="lecturer_id" value="{{ lecturer.lecturer_id }}">
+    </form>
+  </div>
+
+  <div class="p-4 rounded-3 shadow mt-3">
+    {% for student in lecturer.advisee %}
+    <p>
+      {{ student.student_id }}
+      {{ student.first_name }}
+      {{ student.last_name }}
+    </p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

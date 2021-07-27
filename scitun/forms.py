@@ -26,3 +26,7 @@ class Lecturer(FlaskForm):
     last_name = fields.StringField("Last Name", validators=[validators.DataRequired()])
 
     email = fields.StringField("Email", validators=[validators.DataRequired()])
+
+
+class AssignStudent(FlaskForm):
+    student = fields.SelectField("Students", choices=[])

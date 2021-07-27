@@ -10,6 +10,7 @@
       <th>First</th>
       <th>Last</th>
       <th>Email</th>
+      <th>Adviser</th>
       <th></th>
     </tr>
   </thead>
@@ -21,6 +22,7 @@
       <td>{{ student.fist_name }}</td>
       <td>{{ student.last_name }}</td>
       <td>{{ student.email }}</td>
+      <td>{{ student.lecturer_id }}</td>
       <td><a href="{{ url_for('student_view', student_id=student.student_id) }}" class="btn btn-light" >ดูข้อมูล</a></td>
     </tr>
     {% endfor %}

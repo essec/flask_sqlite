@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, request
 import pathlib
 
 from flask_sqlalchemy import model
@@ -38,7 +38,7 @@ def register_student():
     if not std_form.validate_on_submit():
         print(std_form.errors)
         return render_template("student/register.html", std_form=std_form)
-    print(std_form.data)
+    # print(std_form.data)
     student = models.Student()
     std_form.populate_obj(student)
     models.db.session.add(student)
@@ -50,4 +50,48 @@ def register_student():
 def student_view(student_id):
     student = models.Student.query.filter_by(student_id=student_id).first()
     return render_template("/student/view.html", student=student)
-    # return f"student {student_id}"
+
+
+@app.route("/lecturers")
+def lecturer_index():
+    lecturers = models.Lecturer.query.all()
+    return render_template("/lecturer/index.html", lecturers=lecturers)
+
+
+@app.route("/lecturers/register", methods=["GET", "POST"])
+def register_lecturer():
+    form = forms.Lecturer()
+    if not form.validate_on_submit():
+        print(form.errors)
+        return render_template("lecturer/register.html", form=form)
+    # print(form.data)
+    lecturer = models.Lecturer()
+    form.populate_obj(lecturer)
+    models.db.session.add(lecturer)
+    models.db.session.commit()
+    return redirect(url_for("lecturer_index"))
+
+
+@app.route("/lecturers/<lecturer_id>")
+def lecturer_view(lecturer_id):
+    lecturer = models.Lecturer.query.filter_by(lecturer_id=lecturer_id).first()
+    students = models.Student.query.filter_by(lecturer_id=None).all()
+    form = forms.AssignStudent()
+    form.student.choices = [
+        (student.student_id, student.student_id) for student in students
+    ]
+    if not form.validate_on_submit():
+        return render_template("/lecturer/view.html", lecturer=lecturer, form=form)
+    return redirect(url_for("lecturer_view", lecturer_id=lecturer.lecturer_id))
+
+
+@app.route("/advicer/register", methods=["POST"])
+def assign_student():
+    student_id = request.form.get("student")
+    lecturer_id = request.form.get("lecturer_id")
+    student = models.Student.query.filter_by(student_id=student_id).first()
+    lecturer = models.Lecturer.query.filter_by(lecturer_id=lecturer_id).first()
+    if lecturer and student:
+        lecturer.advisee.append(student)
+    models.db.session.commit()
+    return redirect(url_for("lecturer_view", lecturer_id=lecturer_id))
